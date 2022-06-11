@@ -1,14 +1,9 @@
-import { onIdTokenChanged } from "firebase/auth";
 import { GraphQLClient } from "graphql-request";
-import {
-  firebaseApp,
-  firebaseAuth,
-  firebaseFunctions,
-} from "./firebaseInitialization";
+import { firebaseApp, firebaseFunctions } from "./firebaseInitialization";
 
 /**
  * The basics of this logic were borrowed from the internal `_url(name)` method in the following file:
- * `/media-metadata-manager/website/node_modules/@firebase/functions/dist/index.esm2017.js
+ * `/website/node_modules/@firebase/functions/dist/index.esm2017.js
  */
 const getFirebaseFunctionsEndpointUrl = (endpointName: string) => {
   const projectId = firebaseApp.options.projectId;
@@ -21,19 +16,21 @@ const getFirebaseFunctionsEndpointUrl = (endpointName: string) => {
   return `https://${firebaseFunctions.region}-${projectId}.cloudfunctions.net/${endpointName}`;
 };
 
-const relativeGraphqlEndpoint = "media_metadata_manager/graphql";
+const relativeGraphqlEndpoint = "public_beacon/graphql";
 const absoluteGraphqlEndpoint = getFirebaseFunctionsEndpointUrl(
   relativeGraphqlEndpoint
 );
 
 export const graphqlClient = new GraphQLClient(absoluteGraphqlEndpoint);
 
-onIdTokenChanged(firebaseAuth, (user) => {
+// NOTE: Disabled because it was not needed after the project pivot
+/* onIdTokenChanged(firebaseAuth, (user) => {
   if (user) {
     // Attach the authorization header when the user logs in or refreshes their token
     user
       .getIdToken()
       .then((token) => {
+        console.debug("User authorization header set in the GraphQL Client");
         graphqlClient.setHeader("authorization", token);
       })
       .catch((error) => {
@@ -42,6 +39,7 @@ onIdTokenChanged(firebaseAuth, (user) => {
       });
   } else {
     // Remove the authorization headers when the user logs out
+    console.debug("User authorization header removed from the GraphQL Client");
     graphqlClient.setHeaders({});
   }
-});
+}); */

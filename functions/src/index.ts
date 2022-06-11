@@ -5,7 +5,7 @@ import * as cors from "cors";
 import { graphqlEndpoint } from "./graphql";
 
 // Initialize the Express App for the back end
-export const media_metadata_manager = (() => {
+export const public_beacon = (() => {
   const app = express();
 
   // Automatically allow cross-origin requests
