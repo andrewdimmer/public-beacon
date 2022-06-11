@@ -1,10 +1,5 @@
-import { onIdTokenChanged } from "firebase/auth";
 import { GraphQLClient } from "graphql-request";
-import {
-  firebaseApp,
-  firebaseAuth,
-  firebaseFunctions,
-} from "./firebaseInitialization";
+import { firebaseApp, firebaseFunctions } from "./firebaseInitialization";
 
 /**
  * The basics of this logic were borrowed from the internal `_url(name)` method in the following file:
@@ -28,7 +23,8 @@ const absoluteGraphqlEndpoint = getFirebaseFunctionsEndpointUrl(
 
 export const graphqlClient = new GraphQLClient(absoluteGraphqlEndpoint);
 
-onIdTokenChanged(firebaseAuth, (user) => {
+// NOTE: Disabled because it was not needed after the project pivot
+/* onIdTokenChanged(firebaseAuth, (user) => {
   if (user) {
     // Attach the authorization header when the user logs in or refreshes their token
     user
@@ -46,4 +42,4 @@ onIdTokenChanged(firebaseAuth, (user) => {
     console.debug("User authorization header removed from the GraphQL Client");
     graphqlClient.setHeaders({});
   }
-});
+}); */
