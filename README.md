@@ -1,2 +1,3 @@
-# media-metadata-manager
-An external media tagging and playlist management platform created for Coastal Hacks 2022.
+# public-beacon
+
+A public, crowd-sourced beach advisory and closure reporting database created for Coastal Hacks 2022.
