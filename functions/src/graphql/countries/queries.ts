@@ -15,11 +15,17 @@ const countriesData = {
   },
 } as { [key: string]: Country | null };
 
-const countries = () => {
-  return countryIds.map((id) => countriesData[id]);
+const countries = (): Country[] => {
+  return countryIds.reduce((countriesList, countryId) => {
+    const countryData = countriesData[countryId];
+    if (countryData) {
+      countriesList.push(countryData);
+    }
+    return countriesList;
+  }, [] as Country[]);
 };
 
-const country = ({ id }: GraphqlQueryId) => {
+const country = ({ id }: GraphqlQueryId): Country => {
   const countryData = countriesData[id];
   if (countryData) {
     return countryData;

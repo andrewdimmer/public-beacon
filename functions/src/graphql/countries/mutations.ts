@@ -1,4 +1,6 @@
-const createCountry = ({ input }: GraphqlMutationInput<CreateCountryInput>) => {
+const createCountry = ({
+  input,
+}: GraphqlMutationInput<CreateCountryInput>): Country => {
   return {
     // Remove all non-alphabetical character
     id: input.name.replace(/[^a-zA-Z]/g, ""),
