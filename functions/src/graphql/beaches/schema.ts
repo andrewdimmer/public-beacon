@@ -11,6 +11,10 @@ export const schemaString = `
     address2: String
     city: String
     region: String
+    mostRecentStatusId: ID
+    mostRecentStatus: Status
+    statuses: [Status!]!
+    status(id: ID!): Status!
   }
 
   input CreateBeachInput {
@@ -21,5 +25,7 @@ export const schemaString = `
     address2: String
     city: String
     region: String
+    status: StatusOptions
+    statusNotes: String
   }
 `;

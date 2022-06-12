@@ -6,14 +6,18 @@ import {
   countryQueries,
   countrySchemaString,
 } from "./countries";
+import { datetimeSchemaString } from "./datetime";
 import { postalCodeMutations, postalCodeSchemaString } from "./postalCodes";
 import { schemaString as rootSchemaString } from "./schema";
+import { statusMutations, statusSchemaString } from "./statuses";
 
 const schema = buildSchema(`
   ${rootSchemaString}
   ${countrySchemaString}
   ${postalCodeSchemaString}
   ${beachSchemaString}
+  ${statusSchemaString}
+  ${datetimeSchemaString}
 `);
 
 const root = {
@@ -21,6 +25,7 @@ const root = {
   ...countryMutations,
   ...postalCodeMutations,
   ...beachMutations,
+  ...statusMutations,
 };
 
 export const graphqlEndpoint = graphqlHTTP({

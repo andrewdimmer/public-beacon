@@ -1,4 +1,4 @@
-declare interface Beach {
+declare interface BeachData {
   id: string;
   countryId: string;
   postalCodeId: string;
@@ -7,6 +7,13 @@ declare interface Beach {
   address2?: string;
   city?: string;
   region?: string;
+  mostRecentStatusId?: string;
+}
+
+declare interface Beach extends BeachData {
+  mostRecentStatus?: () => Status;
+  statuses: () => Status[];
+  status: (id: GraphqlQueryId) => Status;
 }
 
 declare interface CreateBeachInput {
@@ -17,4 +24,6 @@ declare interface CreateBeachInput {
   address2?: string;
   city?: string;
   region?: string;
+  status?: StatusOptions;
+  statusNotes: string;
 }

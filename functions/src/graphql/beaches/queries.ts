@@ -1,6 +1,8 @@
+import { statusQueries } from "../statuses";
+
 const beachesIds = ["Beach1", "Beach2", "Beach3", "Beach4", "Beach5"];
 
-const beachesData: { [key: string]: Beach | null } = {
+const beachesData: { [key: string]: BeachData | null } = {
   Beach1: {
     id: "Beach1",
     countryId: "Canada",
@@ -9,6 +11,7 @@ const beachesData: { [key: string]: Beach | null } = {
     address1: "Beach 1 Address",
     city: "City 1",
     region: "Region 1",
+    mostRecentStatusId: "Status1",
   },
   Beach2: {
     id: "Beach2",
@@ -19,6 +22,7 @@ const beachesData: { [key: string]: Beach | null } = {
     address2: "Beach 2 Address 2",
     city: "City 2",
     region: "Region 2",
+    mostRecentStatusId: "Status2",
   },
   Beach3: {
     id: "Beach3",
@@ -28,6 +32,7 @@ const beachesData: { [key: string]: Beach | null } = {
     address1: "Beach 3 Address",
     city: "City 3",
     region: "Region 3",
+    mostRecentStatusId: "Status5",
   },
   Beach4: {
     id: "Beach4",
@@ -56,7 +61,27 @@ const beaches = (countryId: string, postalCodeId: string) => (): Beach[] => {
       beachData.countryId === countryId &&
       beachData.postalCodeId === postalCodeId
     ) {
-      beachList.push(beachData);
+      beachList.push({
+        ...beachData,
+        mostRecentStatus: beachData.mostRecentStatusId
+          ? () =>
+              statusQueries.status(
+                beachData.countryId,
+                beachData.postalCodeId,
+                beachId
+              )({ id: beachData.mostRecentStatusId as string })
+          : undefined,
+        statuses: statusQueries.statuses(
+          beachData.countryId,
+          beachData.postalCodeId,
+          beachId
+        ),
+        status: statusQueries.status(
+          beachData.countryId,
+          beachData.postalCodeId,
+          beachId
+        ),
+      });
     }
     return beachList;
   }, [] as Beach[]);
@@ -72,7 +97,27 @@ const beach =
       beachData.countryId === countryId &&
       beachData.postalCodeId === postalCodeId
     ) {
-      return beachData;
+      return {
+        ...beachData,
+        mostRecentStatus: beachData.mostRecentStatusId
+          ? () =>
+              statusQueries.status(
+                beachData.countryId,
+                beachData.postalCodeId,
+                id
+              )({ id: beachData.mostRecentStatusId as string })
+          : undefined,
+        statuses: statusQueries.statuses(
+          beachData.countryId,
+          beachData.postalCodeId,
+          id
+        ),
+        status: statusQueries.status(
+          beachData.countryId,
+          beachData.postalCodeId,
+          id
+        ),
+      };
     } else {
       throw new ReferenceError(`No beach exists with id=${id}`);
     }

@@ -7,6 +7,10 @@ type Beach {
   address2: String
   city: String
   region: String
+  mostRecentStatusId: ID
+  mostRecentStatus: Status
+  statuses: [Status!]!
+  status(id: ID!): Status!
 }
 
 input CreateBeachInput {
@@ -17,4 +21,6 @@ input CreateBeachInput {
   address2: String
   city: String
   region: String
+  status: StatusOptions
+  statusNotes: String
 }
