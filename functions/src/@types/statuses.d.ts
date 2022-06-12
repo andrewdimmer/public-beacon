@@ -29,9 +29,4 @@ declare interface ConfirmStatusInput {
   statusId: string;
 }
 
-declare enum StatusOptions {
-  CLOSED,
-  ADVISORY,
-  NOTICE,
-  OPEN,
-}
+declare type StatusOptions = "CLOSED" | "ADVISORY" | "NOTICE" | "OPEN";
