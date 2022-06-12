@@ -1,0 +1,51 @@
+export const beachesIds = ["Beach1", "Beach2", "Beach3", "Beach4", "Beach5"];
+
+export const beachesData: { [key: string]: BeachData | null } = {
+  Beach1: {
+    id: "Beach1",
+    countryId: "Canada",
+    postalCodeId: "123",
+    name: "Beach 1",
+    address1: "Beach 1 Address",
+    city: "City 1",
+    region: "Region 1",
+    mostRecentStatusId: "Status1",
+  },
+  Beach2: {
+    id: "Beach2",
+    countryId: "UnitedStates",
+    postalCodeId: "789",
+    name: "Beach 2",
+    address1: "Beach 2 Address",
+    address2: "Beach 2 Address 2",
+    city: "City 2",
+    region: "Region 2",
+    mostRecentStatusId: "Status2",
+  },
+  Beach3: {
+    id: "Beach3",
+    countryId: "UnitedStates",
+    postalCodeId: "789",
+    name: "Beach 3",
+    address1: "Beach 3 Address",
+    city: "City 3",
+    region: "Region 3",
+    mostRecentStatusId: "Status5",
+  },
+  Beach4: {
+    id: "Beach4",
+    countryId: "UnitedStates",
+    postalCodeId: "789",
+    name: "Beach 4",
+    address1: "Beach 4 Address",
+    city: "City 4",
+  },
+  Beach5: {
+    id: "Beach5",
+    countryId: "UnitedStates",
+    postalCodeId: "789",
+    name: "Beach 5",
+    address1: "Beach 5 Address",
+    region: "Region 5",
+  },
+};
