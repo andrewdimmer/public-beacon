@@ -1,23 +1,26 @@
 import { graphqlHTTP } from "express-graphql";
 import { buildSchema } from "graphql";
+import { beachMutations, beachSchemaString } from "./beaches";
 import {
-  countrySchemaString,
-  countryQueries,
   countryMutations,
+  countryQueries,
+  countrySchemaString,
 } from "./countries";
-import { postalCodeSchemaString, postalCodeMutations } from "./postalCodes";
+import { postalCodeMutations, postalCodeSchemaString } from "./postalCodes";
 import { schemaString as rootSchemaString } from "./schema";
 
 const schema = buildSchema(`
   ${rootSchemaString}
   ${countrySchemaString}
   ${postalCodeSchemaString}
+  ${beachSchemaString}
 `);
 
 const root = {
   ...countryQueries,
   ...countryMutations,
   ...postalCodeMutations,
+  ...beachMutations,
 };
 
 export const graphqlEndpoint = graphqlHTTP({

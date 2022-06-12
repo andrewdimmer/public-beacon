@@ -1,6 +1,8 @@
+import { beachQueries } from "../beaches";
+
 const postalCodesIds = ["123", "456", "789"];
 
-const postalCodesData: { [key: string]: PostalCode | null } = {
+const postalCodesData: { [key: string]: PostalCodeData | null } = {
   "123": {
     id: "123",
     countryId: "Canada",
@@ -23,7 +25,17 @@ const postalCodes = (countryId: string) => (): PostalCode[] => {
   return postalCodesIds.reduce((postalCodeList, postalCodeId) => {
     const postalCodeData = postalCodesData[postalCodeId];
     if (postalCodeData && postalCodeData.countryId === countryId) {
-      postalCodeList.push(postalCodeData);
+      postalCodeList.push({
+        ...postalCodeData,
+        beaches: beachQueries.beaches(
+          postalCodeData.countryId,
+          postalCodeData.postalCode
+        ),
+        beach: beachQueries.beach(
+          postalCodeData.countryId,
+          postalCodeData.postalCode
+        ),
+      });
     }
     return postalCodeList;
   }, [] as PostalCode[]);
@@ -35,7 +47,17 @@ const postalCode =
     console.log("Running postalCode in Sandbox Mode.");
     const postalCodeData = postalCodesData[id];
     if (postalCodeData && postalCodeData.countryId === countryId) {
-      return postalCodeData;
+      return {
+        ...postalCodeData,
+        beaches: beachQueries.beaches(
+          postalCodeData.countryId,
+          postalCodeData.postalCode
+        ),
+        beach: beachQueries.beach(
+          postalCodeData.countryId,
+          postalCodeData.postalCode
+        ),
+      };
     } else {
       throw new ReferenceError(`No postal code exists with id=${id}`);
     }

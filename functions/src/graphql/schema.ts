@@ -15,5 +15,6 @@ export const schemaString = `
   type Mutation {
     createCountry(input: CreateCountryInput!): Country!
     createPostalCode(input: CreatePostalCodeInput): PostalCode!
+    createBeach(input: CreateBeachInput): Beach!
   }
 `;

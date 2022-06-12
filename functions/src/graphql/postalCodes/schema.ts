@@ -6,6 +6,8 @@ export const schemaString = `
     id: ID!
     countryId: ID!
     postalCode: String!
+    beaches: [Beach!]!
+    beach(id: ID!): Beach!
   }
 
   input CreatePostalCodeInput {
