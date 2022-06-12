@@ -16,5 +16,7 @@ export const schemaString = `
     createCountry(input: CreateCountryInput!): Country!
     createPostalCode(input: CreatePostalCodeInput): PostalCode!
     createBeach(input: CreateBeachInput): Beach!
+    createStatus(input: CreateStatusInput): Status!
+    confirmStatus(input: ConfirmStatusInput): Status!
   }
 `;

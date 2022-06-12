@@ -1,0 +1,4 @@
+type DateTime {
+  milliseconds: String!
+  utcString: String!
+}
