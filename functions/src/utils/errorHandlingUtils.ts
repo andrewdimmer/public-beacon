@@ -5,14 +5,8 @@ const logAndThrowError = (message: string) => {
   throw new ReferenceError(message);
 };
 
-export const resourceAlreadyExistsError = (
-  objectType: string,
-  fieldChecked: string,
-  fieldValue: string
-) => {
-  logAndThrowError(
-    `There already exists a ${objectType} with ${fieldChecked}=${fieldValue}`
-  );
+export const resourceAlreadyExistsError = (objectType: string, id: string) => {
+  logAndThrowError(`There already exists a ${objectType} with id=${id}`);
 };
 
 export const resourceDoesNotExistsError = (objectType: string, id: string) => {

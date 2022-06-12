@@ -1,4 +1,4 @@
-export const countryIds = ["Canada", "UnitedKingdom", "UnitedStates"];
+export const countriesIds = ["Canada", "UnitedKingdom", "UnitedStates"];
 
 export const countriesData: { [key: string]: CountryData | null } = {
   Canada: {

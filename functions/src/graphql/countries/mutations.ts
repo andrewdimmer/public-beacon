@@ -1,16 +1,15 @@
+import countriesDAO from "../../database/countriesDAO";
 import { postalCodeQueries } from "../postalCodes";
 
 const createCountry = ({
   input,
 }: GraphqlMutationInput<CreateCountryInput>): Country => {
   console.log("Running createCountry in Sandbox Mode.");
-  const id = input.name.replace(/[^a-zA-Z]/g, "");
+  const countryData = countriesDAO.create(input);
   return {
-    // Remove all non-alphabetical character
-    id,
-    name: input.name,
-    postalCodes: postalCodeQueries.postalCodes(id),
-    postalCode: postalCodeQueries.postalCode(id),
+    ...countryData,
+    postalCodes: postalCodeQueries.postalCodes(countryData.id),
+    postalCode: postalCodeQueries.postalCode(countryData.id),
   };
 };
 

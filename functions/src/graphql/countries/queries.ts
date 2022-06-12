@@ -1,33 +1,25 @@
-import { countriesData, countryIds } from "../../data/localCountries";
+import countriesDAO from "../../database/countriesDAO";
 import { postalCodeQueries } from "../postalCodes";
 
 const countries = (): Country[] => {
   console.log("Running countries in Sandbox Mode.");
-  return countryIds.reduce((countriesList, countryId) => {
-    const countryData = countriesData[countryId];
-    if (countryData) {
-      countriesList.push({
-        ...countryData,
-        postalCodes: postalCodeQueries.postalCodes(countryId),
-        postalCode: postalCodeQueries.postalCode(countryId),
-      });
-    }
-    return countriesList;
-  }, [] as Country[]);
+  const localCountriesData = countriesDAO.list();
+  return localCountriesData.map((countryData) => {
+    return {
+      ...countryData,
+      postalCodes: postalCodeQueries.postalCodes(countryData.id),
+      postalCode: postalCodeQueries.postalCode(countryData.id),
+    };
+  });
 };
 
 const country = ({ id }: GraphqlQueryId): Country => {
   console.log("Running country in Sandbox Mode.");
-  const countryData = countriesData[id];
-  if (countryData) {
-    return {
-      ...countryData,
-      postalCodes: postalCodeQueries.postalCodes(id),
-      postalCode: postalCodeQueries.postalCode(id),
-    };
-  } else {
-    throw new ReferenceError(`No country exists with id=${id}`);
-  }
+  return {
+    ...countriesDAO.get(id),
+    postalCodes: postalCodeQueries.postalCodes(id),
+    postalCode: postalCodeQueries.postalCode(id),
+  };
 };
 
 export const queries = {
