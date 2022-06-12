@@ -1,29 +1,31 @@
-import { statusMutations, statusQueries } from "../statuses";
+import beachesDAO from "../../database/beachesDAO";
+import { statusQueries } from "../statuses";
 
 const createBeach = ({
   input,
 }: GraphqlMutationInput<CreateBeachInput>): Beach => {
   console.log("Running createBeach in Sandbox Mode.");
-  const id = input.name.replace(/[^a-zA-Z0-9]/g, "");
-  const initialStatusOption = input.status;
-  const initialStatus = initialStatusOption
-    ? statusMutations.createStatus({
-        input: {
-          ...input,
-          beachId: id,
-          status: initialStatusOption,
-          notes: input.statusNotes,
-        },
-      })
-    : undefined;
-
+  const beachData = beachesDAO.create(input);
   return {
-    id,
-    ...input,
-    mostRecentStatusId: initialStatus ? initialStatus.id : undefined,
-    mostRecentStatus: initialStatus ? () => initialStatus : undefined,
-    statuses: statusQueries.statuses(input.countryId, input.postalCodeId, id),
-    status: statusQueries.status(input.countryId, input.postalCodeId, id),
+    ...beachData,
+    mostRecentStatus: beachData.mostRecentStatusId
+      ? () =>
+          statusQueries.status(
+            beachData.countryId,
+            beachData.postalCodeId,
+            beachData.id
+          )({ id: beachData.mostRecentStatusId as string })
+      : undefined,
+    statuses: statusQueries.statuses(
+      input.countryId,
+      input.postalCodeId,
+      beachData.id
+    ),
+    status: statusQueries.status(
+      input.countryId,
+      input.postalCodeId,
+      beachData.id
+    ),
   };
 };
 
