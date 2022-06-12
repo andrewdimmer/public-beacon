@@ -6,12 +6,14 @@ import {
   countryMutations,
 } from "./countries";
 import { postalCodeSchemaString, postalCodeMutations } from "./postalCodes";
+import { beachSchemaString } from "./beaches";
 import { schemaString as rootSchemaString } from "./schema";
 
 const schema = buildSchema(`
   ${rootSchemaString}
   ${countrySchemaString}
   ${postalCodeSchemaString}
+  ${beachSchemaString}
 `);
 
 const root = {
