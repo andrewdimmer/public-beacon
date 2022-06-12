@@ -7,6 +7,7 @@ import {
 } from "../utils/errorHandlingUtils";
 import { insertObjectAndIndex } from "./internalFunctions";
 import postalCodeDAO from "./postalCodeDAO";
+import statusesDAO from "./statusesDAO";
 
 const objectType = "beach";
 
@@ -66,6 +67,35 @@ const get = (
   return beachData;
 };
 
+const updateMostRecentStatus = (
+  countryId: string,
+  postalCodeId: string,
+  beachId: string,
+  statusId: string
+): BeachData => {
+  countriesDAO.confirmExists(countryId);
+  postalCodeDAO.confirmExists(postalCodeId);
+  confirmExists(beachId);
+  statusesDAO.confirmExists(statusId);
+
+  // Note: Need to force the type becuase the type system does not exist throw and error on null.
+  const beachData = beachesData[beachId] as BeachData;
+  const statusData = statusesDAO.get(
+    countryId,
+    postalCodeId,
+    beachId,
+    statusId
+  );
+
+  if (statusData.beachId !== beachId) {
+    resourceNotInRequiredParition("status", statusData.beachId, beachId);
+  }
+
+  beachData.mostRecentStatusId = statusId;
+
+  return beachData;
+};
+
 const create = (input: CreateBeachInput): BeachData => {
   const id = generateId(input.name);
 
@@ -80,7 +110,15 @@ const create = (input: CreateBeachInput): BeachData => {
 
   insertObjectAndIndex(beachData, beachesIds, beachesData);
 
-  // TODO Handle Create Initial Status if Provided
+  const inputStatus = input.status;
+  if (inputStatus) {
+    statusesDAO.create({
+      ...input,
+      beachId: id,
+      status: inputStatus,
+      notes: input.statusNotes,
+    });
+  }
 
   return beachData;
 };
@@ -91,4 +129,5 @@ export default {
   list,
   get,
   create,
+  updateMostRecentStatus,
 };

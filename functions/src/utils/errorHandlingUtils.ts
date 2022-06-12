@@ -1,6 +1,6 @@
 import { logger } from "firebase-functions";
 
-const logAndThrowError = (message: string) => {
+export const logAndThrowError = (message: string) => {
   logger.warn(message);
   throw new ReferenceError(message);
 };

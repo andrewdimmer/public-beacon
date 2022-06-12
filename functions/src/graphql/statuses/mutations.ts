@@ -1,17 +1,17 @@
+import statusesDAO from "../../database/statusesDAO";
 import { datetimeQueries } from "../datetime";
 
 const createStatus = ({
   input,
 }: GraphqlMutationInput<CreateStatusInput>): Status => {
   console.log("Running createStatus in Sandbox Mode.");
-  const id = "DummyId";
-  const createTimestamp = Date.now();
+  const statusData = statusesDAO.create(input);
   return {
-    id,
-    createTimestamp,
-    ...input,
-    createDateTime: datetimeQueries.datetime(createTimestamp),
-    confirmDateTime: datetimeQueries.datetimeOptional(),
+    ...statusData,
+    createDateTime: datetimeQueries.datetime(statusData.createTimestamp),
+    confirmDateTime: datetimeQueries.datetimeOptional(
+      statusData.confirmTimestamp
+    ),
   };
 };
 
@@ -19,17 +19,13 @@ const confirmStatus = ({
   input,
 }: GraphqlMutationInput<ConfirmStatusInput>): Status => {
   console.log("Running createStatus in Sandbox Mode.");
-  const createTimestamp = Date.now() - 60 * 60 * 1000;
-  const confirmTimestamp = Date.now();
+  const statusData = statusesDAO.confirm(input);
   return {
-    id: input.statusId,
-    createTimestamp,
-    confirmTimestamp,
-    ...input,
-    status: "NOTICE",
-    notes: "NOTICE: This is just to test the endpoint is connected.",
-    createDateTime: datetimeQueries.datetime(createTimestamp),
-    confirmDateTime: datetimeQueries.datetimeOptional(confirmTimestamp),
+    ...statusData,
+    createDateTime: datetimeQueries.datetime(statusData.createTimestamp),
+    confirmDateTime: datetimeQueries.datetimeOptional(
+      statusData.confirmTimestamp
+    ),
   };
 };
 
