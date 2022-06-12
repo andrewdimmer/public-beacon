@@ -1,0 +1,10 @@
+type PostalCode {
+  id: ID!
+  countryId: ID!
+  postalCode: String!
+}
+
+input CreatePostalCodeInput {
+  countryId: ID!
+  postalCode: String!
+}

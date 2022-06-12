@@ -1,0 +1,14 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type Query {
+  countries: [Country!]!
+  country(id: ID!): Country!
+}
+
+type Mutation {
+  createCountry(input: CreateCountryInput!): Country!
+  createPostalCode(input: CreatePostalCodeInput): PostalCode!
+}
