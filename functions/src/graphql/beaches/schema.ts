@@ -13,8 +13,8 @@ export const schemaString = `
     region: String
     mostRecentStatusId: ID
     mostRecentStatus: Status
-    historialStatuses: [Status!]!
-    historialStatus: Status!
+    statuses: [Status!]!
+    status(id: ID!): Status!
   }
 
   input CreateBeachInput {

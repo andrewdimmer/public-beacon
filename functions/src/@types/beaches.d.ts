@@ -12,8 +12,8 @@ declare interface BeachData {
 
 declare interface Beach extends BeachData {
   mostRecentStatus?: () => Status;
-  historialStatuses: () => Status[];
-  historialStatus: (id: GraphqlQueryId) => Status;
+  statuses: () => Status[];
+  status: (id: GraphqlQueryId) => Status;
 }
 
 declare interface CreateBeachInput {
