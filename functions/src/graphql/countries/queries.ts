@@ -1,21 +1,5 @@
+import { countriesData, countryIds } from "../../data/localCountries";
 import { postalCodeQueries } from "../postalCodes";
-
-const countryIds = ["Canada", "UnitedKingdom", "UnitedStates"];
-
-const countriesData: { [key: string]: CountryData | null } = {
-  Canada: {
-    id: "Canada",
-    name: "Canada",
-  },
-  UnitedKingdom: {
-    id: "UnitedKingdom",
-    name: "United Kingdom",
-  },
-  UnitedStates: {
-    id: "UnitedStates",
-    name: "United States",
-  },
-};
 
 const countries = (): Country[] => {
   console.log("Running countries in Sandbox Mode.");
