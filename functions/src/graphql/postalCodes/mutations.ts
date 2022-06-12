@@ -1,15 +1,15 @@
+import postalCodeDAO from "../../database/postalCodeDAO";
 import { beachQueries } from "../beaches";
 
 const createPostalCode = ({
   input,
 }: GraphqlMutationInput<CreatePostalCodeInput>): PostalCode => {
   console.log("Running createPostalCode in Sandbox Mode.");
+  const postalCodeData = postalCodeDAO.create(input);
   return {
-    id: input.postalCode,
-    countryId: input.countryId,
-    postalCode: input.postalCode,
-    beaches: beachQueries.beaches(input.countryId, input.postalCode),
-    beach: beachQueries.beach(input.countryId, input.postalCode),
+    ...postalCodeData,
+    beaches: beachQueries.beaches(input.countryId, postalCodeData.id),
+    beach: beachQueries.beach(input.countryId, postalCodeData.id),
   };
 };
 
