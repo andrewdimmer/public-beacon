@@ -5,6 +5,8 @@ export const schemaString = `
   type Country {
     id: ID!
     name: String!
+    postalCodes: [PostalCode!]!
+    postalCode(id: ID!): PostalCode!
   }
   
   input CreateCountryInput {

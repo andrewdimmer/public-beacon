@@ -5,11 +5,13 @@ import {
   countryQueries,
   countryMutations,
 } from "./countries";
+import { postalCodeSchemaString } from "./postalCodes";
 import { schemaString as rootSchemaString } from "./schema";
 
 const schema = buildSchema(`
   ${rootSchemaString}
   ${countrySchemaString}
+  ${postalCodeSchemaString}
 `);
 
 const root = {
