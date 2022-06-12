@@ -2,6 +2,8 @@ import { graphqlHTTP } from "express-graphql";
 import { buildSchema } from "graphql";
 import {
   countrySchemaString,
+  countryQueries,
+  countryMutations,
 } from "./countries";
 import { schemaString as rootSchemaString } from "./schema";
 
@@ -11,7 +13,8 @@ const schema = buildSchema(`
 `);
 
 const root = {
-  hello: () => "Hello World!",
+  ...countryQueries,
+  ...countryMutations,
 };
 
 export const graphqlEndpoint = graphqlHTTP({
